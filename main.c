@@ -29,7 +29,7 @@ void remplissage_affichage(int n,Tab t) //méthode pour remplier et afficher le t
 int addition_entre_n_et_m(int n,int m,Tab t) //calcul le cumul entre la position n et m du tableau t
 {
     int calcul=0;
-    for(i=n;i<m;i++)
+    for(i=n;i<=m;i++)
     {
     calcul=calcul+t[i];
 }
@@ -55,7 +55,7 @@ int main() //méthode main
 {
     int n=15;
     int n1=2; int n2=9;
-    int n3=4, n4=127;
+    int n3=4, n4=12;
     int y,z;
     int max1, max2;
     Tab t;
@@ -67,7 +67,7 @@ int main() //méthode main
     max1=max_between_n_et_m(n1,n3,t);
     printf("Le max entre %d et %d est : %d \n", n1,n3,max1);
     max2=max_between_n_et_m(n2,n4,t);
-    printf("Le cumul entre %d et %d est : %d \n", n2,n4,max2);
+    printf("Le max entre %d et %d est : %d \n", n2,n4,max2);
 
 
 
