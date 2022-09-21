@@ -1,74 +1,77 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void permute(int *a, int *b)
+//devoir du 21/09
+
+void permute(int *a, int *b)  //fonction permute entre deux entiers
 {
     printf("Les deux valeurs sont : a=%d et  b=%d\n",*a,*b);
     int tmp=*a;
     *a=*b;
     *b=tmp;
-    printf("Les valeurs sont d�sormais a=%d et b=%d\n",*a,*b);
+    printf("Les valeurs sont désormais a=%d et b=%d\n",*a,*b);
 }
 
-int max (int *n,int *m, int *z)
+int max (int *n,int *m, int *z,int *maximun) //fonction max qui recherche le max entre 3 entiers
 {
     printf("Les valeurs sont les suivantes n=%d, m=%d, z=%d\n",*n,*m,*z);
-    int max=0;
+    *maximun=0;
     if((*n < *z) && (* m< *z ))
     {
-        max=*z;
+        *maximun=*z;
     }
     else
     {
         if((*n>*m) && (*n>*z))
         {
-            max=*n;
+            *maximun=*n;
         }
         else
         {
                 if(*m>*n && *m>*z )
                 {
-                    max=*m;
+                    *maximun=*m;
                 }
                 else{
-                    max=*n;
+                    *maximun=*n;
                 }
         }
     }
 
-    return max;
+    return *maximun;
 }
 
-int min (int *n,int *m, int *z)
+int min (int *n,int *m, int *z,int *minimun)  //fonction qui retourne le min entre 3 entiers
 {
-    int min=0;
+    *minimun=0;
     if((*n < *z) && (* n< *m ))
     {
-        min=*n;
+        *minimun=*n;
     }
     else
     {
         if((*n>*m) && (*m<*z))
         {
-        min= *m;
+        *minimun= *m;
         }
         else
         {
                         if((*n>*m && *m<z && *n>*z) || ((*n>m && *m<z && *n<*z)))
                         {
-                    min=*m;
+                    *minimun=*m;
                 }
 
                 else {
                         if(*n>*z && *m>*z)
-                    min=*z;
+                    *minimun=*z;
                 }}}
 
-    return min;
+    return *minimun;
 }
-void max_et_min(max,min)
+
+void max_et_min(int *maximun,int *minimun)  //procedure que permet d'écrire le max et le min grâce aux fonctions max etmin
 {
-    printf("le max est : %d et le min est %d\n",max,min);
+    printf("le max est : %d et le min est %d\n",&maximun,&minimun);
 }
 
 
@@ -80,7 +83,7 @@ int main()
     scanf("%d",&n);
     printf("Le nombre insere est : %d\n",n);
     printf("L'adresse de n est : %d\n",&n);
-    printf("Entrer une cha�ne de caractere \n");
+    printf("Entrer une chaîne de caractere \n");
     scanf("%s",&c);
     printf("Le caractere insere est : %c\n",c);
     printf("L'adresse du caractere c est : %d\n",&c);
@@ -90,6 +93,7 @@ int main()
     permute(&n1,&n2);
     printf("Entrer trois valeurs\n");
     int x,y,z;
+    int maximun,minimun;
     scanf("%d %d %d",&x,&y,&z);
-    max_et_min(max(&x,&y,&z),min(&x,&y,&z));
+    max_et_min(max(&x,&y,&z,&maximun),min(&x,&y,&z,&minimun));
 }
