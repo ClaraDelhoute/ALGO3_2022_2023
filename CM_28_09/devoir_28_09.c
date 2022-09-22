@@ -1,22 +1,22 @@
 #include <stdio.h>
 #include <stdlib.h>
 #define MAX 10
-typedef float Tab_notes[MAX]; //DÈfinition de mon tableau note qui contient MAX rÈels
-typedef int Tab_coefficient[MAX]; //DÈfinition de mon tableau coefficient qui contient MAX entiers
+typedef float Tab_notes[MAX]; //D√©finition de mon tableau note qui contient MAX r√©els
+typedef int Tab_coefficient[MAX]; //D√©finition de mon tableau coefficient qui contient MAX entiers
 
 
-void saisie_note(Tab_notes note) //procÈdure saisie des valeurs des notes
+void saisie_note(Tab_notes note) //proc√©dure saisie des valeurs des notes
 {
     int i;
     for(i=0;i<MAX;i++)
     {
-        printf("Entrer la %d note",i);
+        printf("Entrer la %d note",i+1);
         scanf("%f",&note[i]);
         if(*(note+i)>20 || *(note+i)<0)
         {
-            printf("Erreur : une note ne peut pas Ítre superieur ‡ 20 ou infÈrieur ‡ 0");
-            break;  //on break pour arrÍter le programme
-            //TODO eviter de break pour Èviter de fermer le programme et de relancer, futur essai de try/catch
+            printf("Erreur : une note ne peut pas √™tre superieur √† 20 ou inf√©rieur √† 0");
+            break;  //on break pour arr√™ter le programme
+            //TODO eviter de break pour √©viter de fermer le programme et de relancer, futur essai de try/catch
         }
     }
 }
@@ -37,13 +37,13 @@ void affichage_tableau(Tab_notes note,Tab_coefficient coeff) //affichage de mes 
     r=coeff;
     for(i=0;i<MAX;i++)
     {
-        printf("la %dËme valeur est : %2.2f\n " ,i,*(note+i));
+        printf("la %dEme valeur est : %2.2f\n " ,i+1,*(note+i));
         p++;
     }
     printf("\n");
     for(i=0;i<MAX;i++)
      {
-         printf("le %deme coefficient est : %d\n",i,*(coeff+i));
+         printf("le %deme coefficient est : %d\n",i+1,*(coeff+i));
          r++;
      }
 }
@@ -93,26 +93,36 @@ float maximun(Tab_notes note, float *max) //fonction qui retourne le maximun
     return *max;
 }
 
-void modifier_valeur_position_i(Tab_notes note, int *position) //procÈdure qui remplace une note par une autre note
+void modifier_valeur_position_i(Tab_notes note,int *position) //proc√©dure qui remplace une note par une autre note
 {
+
     float nouvelle_valeur;
+    if(*position <=0 || *position >10) //on veut pouvoir modifier une note de la PREMIERE note √† la DIZIEME note
+    {
+        printf("On peut modifier de la premiere √† la dizieme note");
+    }
+    else{
     printf("Entrer la nouvelle valeur");
     scanf("%f",&nouvelle_valeur);
-    *(note+*position)=nouvelle_valeur;
+    if(nouvelle_valeur<=20 && nouvelle_valeur>=0 ) //une note ne peux pas √™tre sup√©rieur √† 20 et inf√©rieur √† 0
+    {
+    *(note+*(position)-1)=nouvelle_valeur;  //Pour modifier la note du t[i-1] car la premi√®re note commence √† 1 et la derni√®re √† 10
+    }
+    }
 }
 
-void ajout_1 (Tab_notes note) //procÈdure qui ajoute 1 ‡ la note
+void ajout_1 (Tab_notes note) //proc√©dure qui ajoute 1 √† la note
 {
     int i;
     for(i=0;i<MAX;i++)
     {
-        if(*(note+i)< 19)  //Une note ne peut pas aller au del‡ de 20
+        if(*(note+i)< 19)  //Une note ne peut pas aller au del√† de 20
         {
             *(note+i)=*(note+i)+1.0;
         }
         else
         {
-            *(note+i)=20.00; //si une note est supÈrieur ‡ 19, on la met ‡ 20
+            *(note+i)=20.00; //si une note est sup√©rieur √† 19, on la met √† 20
         }
     }
 }
@@ -133,7 +143,9 @@ int main()
     printf(" le maximun est : %f\n",maximun(note,&max));
     printf("Le minimun est : %f\n",minimun(note,&min));
     ajout_1(note);
-    int position=2;
+    int position;
+    printf("Entrer la position de la note que vous voulez modifier");
+    scanf("%d",&position);
     modifier_valeur_position_i(note,&position);
     affichage_tableau(note,coeff);
         //Test avec note_1 et coeff_1
@@ -141,17 +153,23 @@ int main()
     printf(" le maximun est : %f\n",maximun(note_1,&max)); //maximun = 20
     printf("Le minimun est : %f\n",minimun(note_1,&min)); //min =0
     ajout_1(note_1); /*le 20 reste 20
-    le 19.7 passe ‡ 20 et le reste prend 1 point */
-    modifier_valeur_position_i(note_1,&position); //modification de la deuxiËme valeur en 18.5
+    le 19.7 passe √† 20 et le reste prend 1 point */
+    printf("Entrer la position de la note que vous voulez modifier");
+    scanf("%d",&position);
+    modifier_valeur_position_i(note_1,&position); //modification de la deuxi√®me valeur en 18.5
+    printf("les nouvelles notes sont : \n");
     affichage_tableau(note_1,coeff_1); //affichage tableaux
 
     /*Test avec note_2 et coeff_1
-    VÈrification du min et max */
+    V√©rification du min et max */
     printf("\n la moyenne est : %2.3f\n", calcul_moyenne(note_2,coeff_1,&moyenne)); //Affiche moyenne=0.645
     printf(" le maximun est : %f\n",maximun(note_2,&max)); //maximun = 0.98
     printf("Le minimun est : %f\n",minimun(note_2,&min)); //min =0.32
     ajout_1(note_2); /*Toutes les valeurs prennent 1 point */
-    modifier_valeur_position_i(note_2,&position); //modification de la deuxiËme valeur en 18.5
+    printf("Entrer la position de la note que vous voulez modifier");
+    scanf("%d",&position);
+    modifier_valeur_position_i(note_2,&position); //modification de la deuxi√®me valeur en 18.5
+    printf("Les nouvelles notes sont : \n");
     affichage_tableau(note_2,coeff_1); //affichage tableaux
 
 }
